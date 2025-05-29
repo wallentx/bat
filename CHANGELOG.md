@@ -4,6 +4,7 @@
 
 - Add paging to `--list-themes`, see PR #3239 (@einfachIrgendwer0815)
 - Support negative relative line ranges, e.g. `bat -r :-10` / `bat -r='-10:'`, see #3068 (@ajesipow)
+- Added `-t`/`--tokens`/`--style=tokens` and `-T`/`--tokens-wide`/`--style=tokens_wide` options to output tokenized lines with semantic scopes, similar to `pygmentize -f tokens`. [#1234] (@wallentx)
 
 ## Bugfixes
 
