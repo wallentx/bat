@@ -50,6 +50,7 @@ pub mod style;
 pub(crate) mod syntax_mapping;
 mod terminal;
 pub mod theme;
+pub(crate) mod token_printer;
 mod vscreen;
 pub(crate) mod wrapping;
 

@@ -33,6 +33,18 @@ impl Default for VisibleLines {
     }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum OutputFormat {
+    Normal,
+    Tokens,
+}
+
+impl Default for OutputFormat {
+    fn default() -> Self {
+        OutputFormat::Normal
+    }
+}
+
 #[derive(Debug, Clone, Default)]
 pub struct Config<'a> {
     /// The explicitly configured language, if any

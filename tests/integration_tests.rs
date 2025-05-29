@@ -3013,3 +3013,39 @@ fn style_components_will_merge_with_env_var() {
         .stdout("     STDIN\n   1 test\n")
         .stderr("");
 }
+
+#[test]
+fn tokens_output_basic() {
+    use assert_cmd::Command;
+    let mut cmd = Command::cargo_bin("bat").unwrap();
+    cmd.arg("-t").arg("tests/examples/test.txt");
+
+    let output = cmd.assert().success().get_output().stdout.clone();
+    let output_str = String::from_utf8_lossy(&output);
+
+    eprintln!("TOKENS OUTPUT: {:?}", output_str);
+
+    // Accept "text" as the base scope for plain text files
+    assert!(
+        output_str.contains("source") || output_str.contains("text"),
+        "Output does not contain expected scope: got {output_str:?}"
+    );
+}
+
+#[test]
+fn tokens_wide_output_basic() {
+    use assert_cmd::Command;
+    let mut cmd = Command::cargo_bin("bat").unwrap();
+    cmd.arg("-T").arg("tests/examples/test.txt");
+
+    let output = cmd.assert().success().get_output().stdout.clone();
+    let output_str = String::from_utf8_lossy(&output);
+
+    eprintln!("TOKENS WIDE OUTPUT: {:?}", output_str);
+
+    // Accept "text.plain" as the full scope for plain text files
+    assert!(
+        output_str.contains("source") || output_str.contains("text.plain"),
+        "Output does not contain expected scope: got {output_str:?}"
+    );
+}

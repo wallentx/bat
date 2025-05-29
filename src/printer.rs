@@ -52,7 +52,7 @@ const ANSI_UNDERLINE_DISABLE: EscapeSequence = EscapeSequence::CSI {
     final_byte: "m",
 };
 
-const EMPTY_SYNTECT_STYLE: syntect::highlighting::Style = syntect::highlighting::Style {
+pub(crate) const EMPTY_SYNTECT_STYLE: syntect::highlighting::Style = syntect::highlighting::Style {
     foreground: Color {
         r: 127,
         g: 127,
@@ -172,13 +172,13 @@ impl Printer for SimplePrinter<'_> {
     }
 }
 
-struct HighlighterFromSet<'a> {
-    highlighter: HighlightLines<'a>,
-    syntax_set: &'a SyntaxSet,
+pub(crate) struct HighlighterFromSet<'a> {
+    pub(crate) highlighter: HighlightLines<'a>,
+    pub(crate) syntax_set: &'a SyntaxSet,
 }
 
 impl<'a> HighlighterFromSet<'a> {
-    fn new(syntax_in_set: SyntaxReferenceInSet<'a>, theme: &'a Theme) -> Self {
+    pub(crate) fn new(syntax_in_set: SyntaxReferenceInSet<'a>, theme: &'a Theme) -> Self {
         Self {
             highlighter: HighlightLines::new(syntax_in_set.syntax, theme),
             syntax_set: syntax_in_set.syntax_set,

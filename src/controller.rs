@@ -13,6 +13,7 @@ use crate::output::{OutputHandle, OutputType};
 #[cfg(feature = "paging")]
 use crate::paging::PagingMode;
 use crate::printer::{InteractivePrinter, Printer, SimplePrinter};
+use crate::token_printer::TokenPrinter;
 use std::collections::VecDeque;
 use std::io::{self, BufRead, Write};
 use std::mem;
@@ -172,7 +173,16 @@ impl Controller<'_> {
             None
         };
 
-        let mut printer: Box<dyn Printer> = if self.config.loop_through {
+        let mut printer: Box<dyn Printer> = if self.config.style_components.tokens()
+            || self.config.style_components.tokens_wide()
+        {
+            Box::new(TokenPrinter::new(
+                self.config,
+                self.assets,
+                &mut opened_input,
+                self.config.style_components.tokens_wide(),
+            )?)
+        } else if self.config.loop_through {
             Box::new(SimplePrinter::new(self.config))
         } else {
             Box::new(InteractivePrinter::new(

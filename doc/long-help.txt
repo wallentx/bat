@@ -32,6 +32,15 @@ Options:
           used twice ('-pp'), it also disables automatic paging (alias for '--style=plain
           --paging=never').
 
+  -t, --tokens
+          Show tokenized output for debugging or analysis. This is an alias for '--style=tokens'.
+          This option is useful when you only want to see the base scope name.
+
+  -T, --tokens-wide
+          Show wide tokenized output for debugging or analysis. This is an alias for
+          '--style=tokens_wide'. This option is useful when you want to see the full scope name and
+          its parent scopes.
+
   -l, --language <language>
           Explicitly set the language for syntax highlighting. The language can be specified as a
           name (like 'C++' or 'LaTeX') or possible file extension (like 'cpp', 'hpp' or 'md'). Use
@@ -177,6 +186,7 @@ Options:
             * full: enables all available components.
             * auto: same as 'default', unless the output is piped.
             * plain: disables all available components.
+            * tokens: show tokenized output for debugging.
             * changes: show Git modification markers.
             * header: alias for 'header-filename'.
             * header-filename: show filenames before the content.

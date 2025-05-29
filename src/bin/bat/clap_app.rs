@@ -108,6 +108,32 @@ pub fn build_app(interactive_output: bool) -> Command {
                 ),
         )
         .arg(
+            Arg::new("tokens")
+                .overrides_with("tokens")
+                .short('t')
+                .long("tokens")
+                .action(ArgAction::SetTrue)
+                .help("Show token output (alias for '--style=tokens').")
+                .long_help(
+                    "Show tokenized output for debugging or analysis. This is an alias \
+                    for '--style=tokens'. This option is useful when you only want to see \
+                    the base scope name.",
+                ),
+        )
+        .arg(
+            Arg::new("tokens-wide")
+                .overrides_with("tokens-wide")
+                .short('T')
+                .long("tokens-wide")
+                .action(ArgAction::SetTrue)
+                .help("Show wide token style (alias for '--style=tokens_wide').")
+                .long_help(
+                    "Show wide tokenized output for debugging or analysis. This is an alias \
+                    for '--style=tokens_wide'. This option is useful when you want to see \
+                    the full scope name and its parent scopes.",
+                ),
+        )
+        .arg(
             Arg::new("language")
                 .short('l')
                 .long("language")
@@ -477,7 +503,7 @@ pub fn build_app(interactive_output: bool) -> Command {
                 })
                 .help(
                     "Comma-separated list of style elements to display \
-                     (*default*, auto, full, plain, changes, header, header-filename, header-filesize, grid, rule, numbers, snip).",
+                     (*default*, auto, full, plain, tokens, changes, header, header-filename, header-filesize, grid, rule, numbers, snip).",
                 )
                 .long_help(
                     "Configure which elements (line numbers, file headers, grid \
@@ -500,6 +526,7 @@ pub fn build_app(interactive_output: bool) -> Command {
                      * full: enables all available components.\n  \
                      * auto: same as 'default', unless the output is piped.\n  \
                      * plain: disables all available components.\n  \
+                     * tokens: show tokenized output for debugging.\n  \
                      * changes: show Git modification markers.\n  \
                      * header: alias for 'header-filename'.\n  \
                      * header-filename: show filenames before the content.\n  \
@@ -726,4 +753,34 @@ pub fn build_app(interactive_output: bool) -> Command {
 #[test]
 fn verify_app() {
     build_app(false).debug_assert();
+}
+
+#[test]
+fn tokens_output_basic() {
+    use assert_cmd::Command;
+    let mut cmd = Command::cargo_bin("bat").unwrap();
+    cmd.arg("-t").arg("tests/examples/test.txt");
+
+    let output = cmd.assert().success().get_output().stdout.clone();
+    let output_str = String::from_utf8_lossy(&output);
+
+    eprintln!("TOKENS OUTPUT: {:?}", output_str);
+
+    // Check for a known base scope in the output (e.g., 'text' for plain text)
+    assert!(output_str.contains("text"));
+}
+
+#[test]
+fn tokens_wide_output_basic() {
+    use assert_cmd::Command;
+    let mut cmd = Command::cargo_bin("bat").unwrap();
+    cmd.arg("-T").arg("tests/examples/test.txt");
+
+    let output = cmd.assert().success().get_output().stdout.clone();
+    let output_str = String::from_utf8_lossy(&output);
+
+    eprintln!("TOKENS WIDE OUTPUT: {:?}", output_str);
+
+    // Check for a known full scope in the output (e.g., 'text.plain' or similar)
+    assert!(output_str.contains("text.plain"));
 }
