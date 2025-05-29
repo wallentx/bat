@@ -766,8 +766,8 @@ fn tokens_output_basic() {
 
     eprintln!("TOKENS OUTPUT: {:?}", output_str);
 
-    // Check for a known base scope in the output (e.g., 'source' for plain text)
-    assert!(output_str.contains("source"));
+    // Check for a known base scope in the output (e.g., 'text' for plain text)
+    assert!(output_str.contains("text"));
 }
 
 #[test]
@@ -781,6 +781,6 @@ fn tokens_wide_output_basic() {
 
     eprintln!("TOKENS WIDE OUTPUT: {:?}", output_str);
 
-    // Check for a known full scope in the output (e.g., 'source.plain' or similar)
-    assert!(output_str.contains("source"));
+    // Check for a known full scope in the output (e.g., 'text.plain' or similar)
+    assert!(output_str.contains("text.plain"));
 }
