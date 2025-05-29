@@ -406,15 +406,11 @@ impl App {
 
         // Tokens wide if `--tokens-wide` is specified.
         if self.matches.get_flag("tokens-wide") {
-            return Some(StyleComponents(HashSet::from([
-                StyleComponent::TokensWide,
-            ])));
+            return Some(StyleComponents(HashSet::from([StyleComponent::TokensWide])));
         }
         // Tokens if `--tokens` is specified.
         if self.matches.get_flag("tokens") {
-            return Some(StyleComponents(HashSet::from([
-                StyleComponent::Tokens,
-            ])));
+            return Some(StyleComponents(HashSet::from([StyleComponent::Tokens])));
         }
 
         // Default behavior.

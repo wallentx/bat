@@ -114,7 +114,9 @@ pub fn build_app(interactive_output: bool) -> Command {
                 .long("tokens")
                 .action(ArgAction::SetTrue)
                 .help("Show token output (alias for '--style=tokens').")
-                .long_help("Show tokenized output for debugging or analysis. Alias for '--style=tokens'."),
+                .long_help(
+                    "Show tokenized output for debugging or analysis. Alias for '--style=tokens'.",
+                ),
         )
         .arg(
             Arg::new("tokens-wide")

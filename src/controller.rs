@@ -173,7 +173,9 @@ impl Controller<'_> {
             None
         };
 
-        let mut printer: Box<dyn Printer> = if self.config.style_components.tokens() || self.config.style_components.tokens_wide() {
+        let mut printer: Box<dyn Printer> = if self.config.style_components.tokens()
+            || self.config.style_components.tokens_wide()
+        {
             Box::new(TokenPrinter::new(
                 self.config,
                 self.assets,

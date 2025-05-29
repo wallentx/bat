@@ -3013,3 +3013,29 @@ fn style_components_will_merge_with_env_var() {
         .stdout("     STDIN\n   1 test\n")
         .stderr("");
 }
+
+#[test]
+fn tokens_output_basic() {
+    use assert_cmd::Command;
+    let mut cmd = Command::cargo_bin("bat").unwrap();
+    cmd.arg("-t").arg("tests/examples/test.txt");
+
+    let output = cmd.assert().success().get_output().stdout.clone();
+    let output_str = String::from_utf8_lossy(&output);
+
+    // Check for a known base scope in the output (e.g., 'source' for plain text)
+    assert!(output_str.contains("source"));
+}
+
+#[test]
+fn tokens_wide_output_basic() {
+    use assert_cmd::Command;
+    let mut cmd = Command::cargo_bin("bat").unwrap();
+    cmd.arg("-T").arg("tests/examples/test.txt");
+
+    let output = cmd.assert().success().get_output().stdout.clone();
+    let output_str = String::from_utf8_lossy(&output);
+
+    // Check for a known full scope in the output (e.g., 'source.plain' or similar)
+    assert!(output_str.contains("source"));
+}
