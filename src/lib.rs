@@ -46,6 +46,7 @@ pub(crate) mod paging;
 mod preprocessor;
 mod pretty_printer;
 pub(crate) mod printer;
+pub(crate) mod token_printer;
 pub mod style;
 pub(crate) mod syntax_mapping;
 mod terminal;

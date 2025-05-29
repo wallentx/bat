@@ -19,6 +19,8 @@ pub enum StyleComponent {
     Full,
     Default,
     Plain,
+    Tokens,
+    TokensWide,
 }
 
 impl StyleComponent {
@@ -58,7 +60,17 @@ impl StyleComponent {
                 StyleComponent::Snip,
             ],
             StyleComponent::Plain => &[],
+            StyleComponent::Tokens => &[StyleComponent::Tokens],
+            StyleComponent::TokensWide => &[StyleComponent::TokensWide],
         }
+    }
+
+    pub fn tokens(self) -> bool {
+        matches!(self, StyleComponent::Tokens)
+    }
+
+    pub fn tokens_wide(self) -> bool {
+        matches!(self, StyleComponent::TokensWide)
     }
 }
 
@@ -80,6 +92,8 @@ impl FromStr for StyleComponent {
             "full" => Ok(StyleComponent::Full),
             "default" => Ok(StyleComponent::Default),
             "plain" => Ok(StyleComponent::Plain),
+            "tokens" => Ok(StyleComponent::Tokens),
+            "tokens-wide" => Ok(StyleComponent::TokensWide),
             _ => Err(format!("Unknown style '{s}'").into()),
         }
     }
@@ -128,6 +142,14 @@ impl StyleComponents {
 
     pub fn plain(&self) -> bool {
         self.0.iter().all(|c| c == &StyleComponent::Plain)
+    }
+
+    pub fn tokens(&self) -> bool {
+        self.0.contains(&StyleComponent::Tokens)
+    }
+
+    pub fn tokens_wide(&self) -> bool {
+        self.0.contains(&StyleComponent::TokensWide)
     }
 
     pub fn insert(&mut self, component: StyleComponent) {
