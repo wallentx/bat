@@ -15,6 +15,10 @@ Options:
           How to treat binary content. (default: no-printing)
   -p, --plain...
           Show plain style (alias for '--style=plain').
+  -t, --tokens
+          Show token output (alias for '--style=tokens').
+  -T, --tokens-wide
+          Show wide token style (alias for '--style=tokens_wide').
   -l, --language <language>
           Set the language for syntax highlighting.
   -H, --highlight-line <N:M>
@@ -52,8 +56,8 @@ Options:
   -s, --squeeze-blank
           Squeeze consecutive empty lines.
       --style <components>
-          Comma-separated list of style elements to display (*default*, auto, full, plain, changes,
-          header, header-filename, header-filesize, grid, rule, numbers, snip).
+          Comma-separated list of style elements to display (*default*, auto, full, plain, tokens,
+          changes, header, header-filename, header-filesize, grid, rule, numbers, snip).
   -r, --line-range <N:M>
           Only print the lines from N to M.
   -L, --list-languages
