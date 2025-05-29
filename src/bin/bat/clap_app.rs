@@ -115,7 +115,9 @@ pub fn build_app(interactive_output: bool) -> Command {
                 .action(ArgAction::SetTrue)
                 .help("Show token output (alias for '--style=tokens').")
                 .long_help(
-                    "Show tokenized output for debugging or analysis. Alias for '--style=tokens'.",
+                    "Show tokenized output for debugging or analysis. This is an alias \
+                    for '--style=tokens'. This option is useful when you only want to see \
+                    the base scope name.",
                 ),
         )
         .arg(
@@ -124,7 +126,12 @@ pub fn build_app(interactive_output: bool) -> Command {
                 .short('T')
                 .long("tokens-wide")
                 .action(ArgAction::SetTrue)
-                .help("Show wide token style (alias for '--style=tokens_wide')."),
+                .help("Show wide token style (alias for '--style=tokens_wide').")
+                .long_help(
+                    "Show wide tokenized output for debugging or analysis. This is an alias \
+                    for '--style=tokens_wide'. This option is useful when you want to see \
+                    the full scope name and its parent scopes.",
+                ),
         )
         .arg(
             Arg::new("language")
@@ -504,8 +511,8 @@ pub fn build_app(interactive_output: bool) -> Command {
                      file contents. The argument is a comma-separated list of \
                      components to display (e.g. 'numbers,changes,grid') or a \
                      pre-defined style ('full'). To set a default style, add the \
-                     '--style=..' option to the configuration file or export the \
-                     BAT_STYLE environment variable (e.g.: export BAT_STYLE=..).\n\n\
+                     '--style=\"..\"' option to the configuration file or export the \
+                     BAT_STYLE environment variable (e.g.: export BAT_STYLE=\"..\").\n\n\
                      When styles are specified in multiple places, the \"nearest\" set \
                      of styles take precedence. The command-line arguments are the highest \
                      priority, followed by the BAT_STYLE environment variable, and then \
